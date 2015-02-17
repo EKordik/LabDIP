@@ -6,12 +6,16 @@
 package dip.lab2.student.solution1;
 
 /**
- *
- * @author ekordik
+ * The TipCalculatorStrategy interface has a setPercent method that accepts a 
+ * double as a parameter and a calculateTip method to calculate the actual tip
+ * amount.
+ * 
+ * @author Emma Kordik
+ * @version 1.00
  */
 public interface TipCalculatorStrategy {
 
-    public void setPercent(final double percent);
-    public abstract void calculateTip();
+    public abstract void setPercent(final double percent);
+    public abstract double calculateTip();
     
 }

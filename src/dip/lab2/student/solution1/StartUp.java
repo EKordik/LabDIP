@@ -6,15 +6,18 @@
 package dip.lab2.student.solution1;
 
 /**
- *
- * @author ekordik
+ * This start up class is to demonstrate the TipCalculatorService. 
+ * @author Emma Kordik
+ * @version 1.00
  */
 public class StartUp {
     public static void main(String[] args){
+        
      TipCalculatorService service = new TipCalculatorService(
-             new FoodServiceTipStrategy(10.00, 20));
+             new BaggageHandlerTipStrategy(3,20));
      
-     service.calculateTip();
+        System.out.println(service.calculateTip());
+     
      
     }
          
