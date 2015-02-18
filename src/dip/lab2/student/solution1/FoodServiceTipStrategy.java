@@ -5,8 +5,6 @@
  */
 package dip.lab2.student.solution1;
 
-import java.text.DecimalFormat;
-import java.util.Scanner;
 
 /**
  * FoodServiceTipStrategy is a low-level class to calculate the tip for a food
@@ -14,9 +12,9 @@ import java.util.Scanner;
  * This class has a constructor that sets the tip percent and the cost of the
  * meal when the class is called. It also has a constructor that just accepts
  * the cost of the meal. 
- * There are two methods in this class. the setPercent method sets the percent 
- * of the tip. The calculateTip method calculates the amount of the tip and 
- * displays that.
+ * There are two methods in this class. the setQuality method sets the percent 
+ * of the tip based on the quality of the service. The calculateTip method 
+ * calculates the amount of the tip.
  * 
  * @author Emma Kordik
  * @version 1.00
@@ -24,26 +22,21 @@ import java.util.Scanner;
 public class FoodServiceTipStrategy implements TipCalculatorStrategy {
     private double percent;
     private double mealAmount;
-    private Scanner keyboard = new Scanner(System.in);
     
     /**
      * Constructor that sets both the meal cost and the percent of tip
      * @param mealAmount
-     * @param percent 
+     * @param quality
      */
-    public FoodServiceTipStrategy(final double mealAmount, final double percent){
+    public FoodServiceTipStrategy(final double mealAmount, ServiceQuality quality){
        //Validates and sets the cost of the meal 
         if(mealAmount < 0 ){
           throw new IllegalArgumentException();
       }else {
           this.mealAmount= mealAmount;
       }
-       //Validates and sets percent 
-       if(percent < 0 || percent>100){
-            throw new IllegalArgumentException();
-        }else{
-             this.percent = percent/100;
-        }   
+      
+        this.setTipPercent(quality);
     }
     /**
      * Constructor that accepts and parameter for the meal Amount and automatically
@@ -59,17 +52,19 @@ public class FoodServiceTipStrategy implements TipCalculatorStrategy {
       }
          this.percent = .2;
     }
+    
     /**
-     * Sets the percent of the tip
-     * @param percent 
+     * Sets the percent based on the quality of the service received
+     * @param quality 
      */
-    @Override
-    public final void setPercent(final double percent){
-        if(percent < 0 || percent>100){
-            throw new IllegalArgumentException();
-        }else{
-             this.percent = percent/100;
-        }    
+   @Override
+    public final void setTipPercent(ServiceQuality quality){
+        switch(quality){
+            case GOOD: percent = .2;break;
+            case FAIR: percent = .15; break;
+            case TERRIBLE: percent = .0;break;
+            case GREAT: percent = .25;break;
+        }
     }
     /**
      * Calculates the Tip Amount

@@ -11,7 +11,8 @@ import java.text.DecimalFormat;
  * TipCalculatorService to calculate tips.
  * This is a high level class. The constructor accepts a TipCalculatorStrategy to
  * be used when calculating the tip. It also has a setTipPercent method that 
- * accepts a double as a parameter and sends that to the TipCalculatorStrategy
+ * accepts a ServiceQuality enum as a parameter and sends that to the 
+ * TipCalculatorStrategy.
  * The calculateTip method calculates the proper tip amount.
  * 
  * @author Emma Kordik
@@ -24,11 +25,11 @@ public class TipCalculatorService {
         this.tip=tip;
     }
     /**
-     * Sets the percent of the tip
+     * Sets the percent of the tip based on the quality
      * @param percent 
      */
-    public void setTipPercent(double percent){
-        tip.setPercent(percent);
+    public void setTipPercent(ServiceQuality quality){
+        tip.setTipPercent(quality);
     }
     
     //Calculates the amount of the tip
