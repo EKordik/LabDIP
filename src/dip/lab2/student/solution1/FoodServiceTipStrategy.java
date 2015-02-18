@@ -77,9 +77,6 @@ public class FoodServiceTipStrategy implements TipCalculatorStrategy {
     
     @Override
     public final double calculateTip(){
-        DecimalFormat formatTip = new DecimalFormat("$###,###,##0.00");
-        double total = mealAmount*percent;
-                
         return mealAmount*percent;
     }
 }

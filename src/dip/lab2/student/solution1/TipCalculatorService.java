@@ -33,7 +33,7 @@ public class TipCalculatorService {
     
     //Calculates the amount of the tip
     public String calculateTip(){
-        DecimalFormat formatTip = new DecimalFormat("$###,###,##0.00");
+        DecimalFormat formatTip = new DecimalFormat("$###,##0.00");
         
         return "Tip Amount: " + formatTip.format(tip.calculateTip());
     }
