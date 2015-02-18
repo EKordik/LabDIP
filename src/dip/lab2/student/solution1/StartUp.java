@@ -14,7 +14,7 @@ public class StartUp {
     public static void main(String[] args){
         
      TipCalculatorService service = new TipCalculatorService(
-             new BaggageHandlerTipStrategy(3,20));
+             new TaxiTipStrategy(30,20));
      
         System.out.println(service.calculateTip());
      
