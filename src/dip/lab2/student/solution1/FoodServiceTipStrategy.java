@@ -14,21 +14,25 @@ package dip.lab2.student.solution1;
  * the cost of the meal. 
  * There are two methods in this class. the setQuality method sets the percent 
  * of the tip based on the quality of the service. The calculateTip method 
- * calculates the amount of the tip.
+ * calculates the amount of the tip.The setQualityPercent method sets the percent 
+ * value for each enum allowing for an override of the default values. 
  * 
+ * Enums initial values: Good = 20%, Fair = 15%, Great = 25%, Terrible =0%
  * @author Emma Kordik
  * @version 1.00
  */
 public class FoodServiceTipStrategy implements TipCalculatorStrategy {
     private double percent;
     private double mealAmount;
+    private ServiceQuality quality;
     
     /**
      * Constructor that sets both the meal cost and the percent of tip
      * @param mealAmount
      * @param quality
      */
-    public FoodServiceTipStrategy(final double mealAmount, ServiceQuality quality){
+    public FoodServiceTipStrategy(final double mealAmount, ServiceQuality quality, 
+            double percent){
        //Validates and sets the cost of the meal 
         if(mealAmount < 0 ){
           throw new IllegalArgumentException();
@@ -36,7 +40,9 @@ public class FoodServiceTipStrategy implements TipCalculatorStrategy {
           this.mealAmount= mealAmount;
       }
       
-        this.setTipPercent(quality);
+        this.setQualityPercent(quality, percent);
+        this.setTipQualityPercent(quality);
+        
     }
     /**
      * Constructor that accepts and parameter for the meal Amount and automatically
@@ -50,7 +56,14 @@ public class FoodServiceTipStrategy implements TipCalculatorStrategy {
       }else {
           this.mealAmount= mealAmount;
       }
-         this.percent = .2;
+
+         //Intiailizes Enums
+        quality.GOOD.setPercent(.2);
+        quality.FAIR.setPercent(.15);
+        quality.GREAT.setPercent(.25);
+        quality.TERRIBLE.setPercent(.00);
+        
+        this.setTipQualityPercent(quality);
     }
     
     /**
@@ -58,14 +71,28 @@ public class FoodServiceTipStrategy implements TipCalculatorStrategy {
      * @param quality 
      */
    @Override
-    public final void setTipPercent(ServiceQuality quality){
+    public final void setTipQualityPercent(ServiceQuality quality){
         switch(quality){
-            case GOOD: percent = .2;break;
-            case FAIR: percent = .15; break;
-            case TERRIBLE: percent = .0;break;
-            case GREAT: percent = .25;break;
+            case GOOD: percent = quality.getPercent();
+            case FAIR: percent = quality.getPercent(); break;
+            case TERRIBLE: percent = quality.getPercent();break;
+            case GREAT: percent = quality.getPercent();break;
         }
     }
+    /**
+     * 
+     * @param quality
+     * @param percent 
+     */
+    @Override
+    public final void setQualityPercent(ServiceQuality quality, double percent){
+        if(percent<0 || percent > 100){
+            throw new IllegalArgumentException();
+        }else{
+            quality.setPercent(percent/100);
+        }
+    }
+    
     /**
      * Calculates the Tip Amount
      */

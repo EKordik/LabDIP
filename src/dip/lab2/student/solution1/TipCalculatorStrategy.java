@@ -15,7 +15,8 @@ package dip.lab2.student.solution1;
  */
 public interface TipCalculatorStrategy {
 
-    public abstract void setTipPercent(final ServiceQuality quality);
+    public abstract void setTipQualityPercent(final ServiceQuality quality);
+    public abstract void setQualityPercent(ServiceQuality qualiyt, double percent);
     public abstract double calculateTip();
     
 }

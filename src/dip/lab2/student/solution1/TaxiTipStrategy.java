@@ -10,9 +10,10 @@ package dip.lab2.student.solution1;
  * Taxi driver.
  * This class has a method to set the percent based off of the quality of service 
  * and a calculateTip method which calculates and returns the amount you should 
- * be paying as a tip.
+ * be paying as a tip. The setQualityPercent method sets the percent value for
+ * each enum allowing for an override of the default values. 
  * The constructor accepts a parameter of a double for the cost of the ride and 
- * automatically sets the percent to 20%. 
+ * automatically sets enums to good=20%, fair =%15, great =20%, terrible = 0%.
  * There also is a constructor that accepts both an ENUM for quality of service 
  * and a double for the percent of the tip.
  * 
@@ -22,7 +23,7 @@ package dip.lab2.student.solution1;
 public class TaxiTipStrategy implements TipCalculatorStrategy{
     private double cabCost;
     private double percent;
-    
+    private ServiceQuality quality;
     /**
      * 
      * @param cabCost 
@@ -35,7 +36,14 @@ public class TaxiTipStrategy implements TipCalculatorStrategy{
             this.cabCost = cabCost;
         }
         
-        percent = 0.2;
+        
+         //Intiailizes Enums
+        quality.GOOD.setPercent(.2);
+        quality.FAIR.setPercent(.15);
+        quality.GREAT.setPercent(.2);
+        quality.TERRIBLE.setPercent(.00);
+        
+        this.setTipQualityPercent(quality);
     }
     
     /**
@@ -43,30 +51,42 @@ public class TaxiTipStrategy implements TipCalculatorStrategy{
      * @param cabCost
      * @param percent 
      */
-    public TaxiTipStrategy(double cabCost, ServiceQuality quality){
+    public TaxiTipStrategy(double cabCost, ServiceQuality quality, double percent){
         //Validates and sets the cost of the cab
         if(cabCost <0){
             throw new IllegalArgumentException();
         }else{
             this.cabCost = cabCost;
         }
-        
-        this.setTipPercent(quality);
+        this.setQualityPercent(quality,percent);
+        this.setTipQualityPercent(quality);
     }
     /**
      * 
      * @param quality
      */
     @Override
-    public final void setTipPercent(ServiceQuality quality){
+    public final void setTipQualityPercent(ServiceQuality quality){
         switch(quality){
-            case GOOD: percent = .2;break;
-            case FAIR: percent = .15; break;
-            case TERRIBLE: percent = .0;break;
-            case GREAT: percent = .2;break;
+            case GOOD: percent = quality.getPercent();
+            case FAIR: percent = quality.getPercent(); break;
+            case TERRIBLE: percent = quality.getPercent();break;
+            case GREAT: percent = quality.getPercent();break;
         }
     }
-    
+    /**
+     * 
+     * @param quality
+     * @param percent 
+     */
+    @Override
+    public final void setQualityPercent(ServiceQuality quality, double percent){
+        if(percent<0 || percent > 100){
+            throw new IllegalArgumentException();
+        }else{
+            quality.setPercent(percent/100);
+        }
+    }
     @Override
     public double calculateTip() {
         return cabCost*percent;
