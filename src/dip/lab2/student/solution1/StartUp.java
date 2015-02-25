@@ -19,7 +19,7 @@ public class StartUp {
         TipCalculatorService service = new TipCalculatorService(
              new BaggageHandlerTipStrategy(1,ServiceQuality.GOOD, 20));
     
-        System.out.println(service.calculateTip());
+        System.out.println(service.calculateFormattedTip());
      
      
     }
